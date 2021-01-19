@@ -77,7 +77,7 @@ public class AdaptiveAlgo {
     public void AllPathsRecurs(int teta) {
         if (numOfPaths <= teta) {
             ArrayList<String> paths = new ArrayList<String>(numOfPaths);
-            buildPaths(new String(), mat.length - 1, mat[0].length - 1, paths);
+            buildPaths("", mat.length - 1, mat[0].length - 1, paths);
             System.out.println(paths);
         }
     }
@@ -97,11 +97,11 @@ public class AdaptiveAlgo {
         } else if (i == 0 && j == 0) {
             paths.add(path);
         } else if (i == 0) {
-            String t = new String();
+            String t = "";
             for (int k = 0; k < j; k++) t = t + "0";
             paths.add(t + path);
         } else if (j == 0) {
-            String t = new String();
+            String t = "";
             for (int k = 0; k < i; k++) t = t + "1";
             paths.add(t + path);
         }
@@ -146,9 +146,31 @@ public class AdaptiveAlgo {
         return cheapestPrice;
     }
 
+    public static void resizePrice(Node[][] mat) {
+        int y = mat.length, x = mat[0].length;
+        for (int k = 1; k < y; k++)
+            mat[k][0].price = mat[k - 1][0].y + mat[k - 1][0].price;
+        for (int k = 1; k < x; k++)
+            mat[0][k].price = mat[0][k-1].x + mat[0][k-1].price;
+        for (int k = 1; k < y; k++) {
+            for (int l = 1; l < x; l++) {
+                int xMin = mat[k][l - 1].price + mat[k][l - 1].x;
+                int yMin = mat[k - 1][l].price + mat[k - 1][l].y;
+                mat[k][l].price = Math.min(yMin, xMin);
+            }
+        }
+    }
+
+    public static int adaptiveAlgo(Node[][] mat) {
+        int y = mat.length, x = mat[0].length;
+        resizePrice(mat);
+        return mat[y - 1][x - 1].price;
+    }
+
     public static void main(String[] args) {
         int teta = 10;
         Node[][] nodes = InitMatrixOfPrices.initMatOfNodes1();
+        nodes[1][0].x = 9;
         AdaptiveAlgo ap = new AdaptiveAlgo(nodes);
         ap.getBestPrice();
         System.out.println("the price of the cheapest path: " + ap.getCheapestPrice());
@@ -164,7 +186,7 @@ public class AdaptiveAlgo {
                 y++;
             }
         }
-        nodes[1][0].x = 9;
+        System.out.println("my result:"+adaptiveAlgo(nodes));
         ap.AllPathsRecurs(teta);
     }
 }

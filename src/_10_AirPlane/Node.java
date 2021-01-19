@@ -11,5 +11,37 @@ public class Node {
     public String toString(){
         return "("+x+","+y+") ";
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getNumOfPaths() {
+        return numOfPaths;
+    }
+
+    public void setNumOfPaths(int numOfPaths) {
+        this.numOfPaths = numOfPaths;
+    }
 }// class Node
 
