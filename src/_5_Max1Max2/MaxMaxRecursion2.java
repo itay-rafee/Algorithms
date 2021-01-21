@@ -47,6 +47,16 @@ public class MaxMaxRecursion2 {
 		//System.out.println("max2 = "+max2);
 		//System.out.println("comparisons = "+comparisons);
 	}
+
+//	public static int[] maxMax(int[] arr){
+//		int[] ans = new int[2];
+//		int n  = arr.length;
+//		for (int i = 0; i < n; i += 2) {
+//			if ()
+//		}
+//		return ans;
+//	}
+
 	public static void main(String[] args) {
 		int size = 1000000, loop = 100;
 		double diff = 0;
