@@ -1,4 +1,4 @@
-package Tests._2020_a;
+package _16_Tests._2020_a;
 
 import _10_AirPlane.InitMatrixOfPrices;
 import _10_AirPlane.Node;

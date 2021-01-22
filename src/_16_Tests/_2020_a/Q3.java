@@ -1,9 +1,7 @@
-package Tests._2020_a;
+package _16_Tests._2020_a;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Vector;
 
 public class Q3 {
     public static int[] horsesProblem(int[] horses){
