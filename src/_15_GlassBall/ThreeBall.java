@@ -12,19 +12,21 @@ public class ThreeBall {
             f2[i] = TwoBall.numOfCheck(i);
 
         }
-        for (int i = 4; i < n; i++) {
-            int min = n;
-            for (int j = 1; j < i - 1; j++) {
+        for (int i = 4; i <= n; i++) {
+            f3[i] = Integer.MAX_VALUE;
+            for (int j = 1; j < i; j++) {
                 int x = Math.max(f2[j-1]+1,f3[i-j]+1);
-                if (x < min)min = x;
+                if (x < f3[i])f3[i] = x;
             }
-            f3[i] = min;
         }
+
         return f3[n];
     }
 
     public static void main(String[] args){
-        int n = 10;
+        int n = 3425;
         System.out.println(numOfCheck(n));
     }
 }
+
+

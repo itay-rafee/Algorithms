@@ -1,31 +1,38 @@
 package _15_GlassBall;
 
+import static _14_MaxSubMatrixArray.maxSubMatrix.printMat;
+
 public class KBall {
 
     // k balls, n floors
     public static int numOfCheck(int n, int k) {
-        int[][] check = new int[k + 1][n + 1];
-        for (int i = 0; i < n; i++) {
-            check[0][i] = 0;
-            check[1][i] = i;
-        }
-        for (int i = 2; i < k; i++) {
+        int[][] check = new int[n + 1][k+1];
+        for (int i = 1; i <= n; i++) {
             check[i][0] = 0;
             check[i][1] = 1;
-            if (n >= 2) check[i][2] = 2;
-            for (int j = 2; j < n; j++) {
-                int min = n + 1;
-                for (int l = 1; l < j - 1; l++) {
-                    min = Math.min(Math.max(check[i - 1][l - 1], check[i][j - l]), min) + 1;
+        }
+        for (int i = 1; i <= k; i++) {
+            check[1][i] = i;
+        }
+        for (int i = 2; i <= n; i++) {
+            for (int j = 2; j <= k; j++) {
+                check[i][j] = Integer.MAX_VALUE;
+                for (int l = 1; l <= j; l++) {
+                    check[i][j] = Math.min(Math.max(check[i - 1][l - 1], check[i][j - l]) +1, check[i][j]);
                 }
-                check[i][j] = min;
             }
         }
-        return check[k][n];
+        printMat(check);
+        return check[n][k];
     }
 
     public static void main(String[] args){
-        int n = 100, k = 11;
+        int n = 3, k = 3425;
+        System.out.print(" ");
+        for (int i = 0; i <= k; i++) {
+            System.out.print(i + ", ");
+        }
+        System.out.println();
         System.out.println(numOfCheck(n, k));
     }
 }
