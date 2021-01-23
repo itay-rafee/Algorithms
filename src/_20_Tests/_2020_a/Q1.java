@@ -1,4 +1,4 @@
-package _16_Tests._2020_a;
+package _20_Tests._2020_a;
 
 public class Q1 {
 

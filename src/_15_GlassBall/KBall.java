@@ -4,7 +4,7 @@ import static _14_MaxSubMatrixArray.maxSubMatrix.printMat;
 
 public class KBall {
 
-    // k balls, n floors
+    // n balls, k floors
     public static int numOfCheck(int n, int k) {
         int[][] check = new int[n + 1][k+1];
         for (int i = 1; i <= n; i++) {
@@ -27,7 +27,7 @@ public class KBall {
     }
 
     public static void main(String[] args){
-        int n = 3, k = 3425;
+        int n = 3, k = 50;
         System.out.print(" ");
         for (int i = 0; i <= k; i++) {
             System.out.print(i + ", ");

@@ -31,6 +31,8 @@ public class Adaptive {
     public static void main(String[] args){
         int[] a = {1,3,6,1,3,6};
 
+        int[] t = {1,4,5,1,5,7};
+        printMat(buildMat(t));
 
     }
 }
