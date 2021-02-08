@@ -1,7 +1,7 @@
 # Algorithm
 
-In this project we will implement algorithms that have been studied in Cross Algorithms A. 
-In addition, there are also examples and solutions of tests from previous years in this project.
+In this project we will implement algorithms that were taught in the Algorithms A course, 
+in addition there are also examples and solutions of tests from previous years in this project.
 
 <h3>Package Of The Algorithm : </h3>
 
