@@ -1,7 +1,10 @@
+package _20_Tests._2021_a;
+
+import static _14_MaxSubMatrixArray.maxSubMatrix.printMat;
 
 public class Q2 {
 
-    public static int longestOfOne(int[] arr){
+    public static int longestOfOne(int[] arr) {
         int maxOne = 0, counter = 0;
         boolean flag = false;
         for (int j : arr) {
@@ -78,12 +81,11 @@ public class Q2 {
         }
         setRow(arr,mat);
         int max = 0;
-
+        printMat(mat);
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 if (mat[i][j] > 0){
-                    int ans = mat[i][j];
                     if (i-1 > 0 && i+1 < x && j-1 > 0 && j+1 < y){
                         if (mat[i-1][j] == mat[i][j] || mat[i+1][j] == mat[i][j]){
                             max = Math.max(max, mat[i][j] + Math.max(mat[i][j-1], mat[i][j+1])-1);
@@ -157,4 +159,24 @@ public class Q2 {
         return max;
     }
 
+    public static void main(String[] args){
+
+        System.out.println("moria");
+        try {
+            Thread.sleep(3000);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e){
+
+        }
+        System.out.println("end");
+
+//        int[][] a = {
+//                {1,1,1,0},
+//                {1,1,0,0}
+//        };
+//        System.out.println(imaginaryPlus(a));
+    }
 }

@@ -1,3 +1,5 @@
+package _20_Tests._2021_a;
+
 public class Q3 {
     public static int maxi(int[] arr){
         int n = arr.length;
