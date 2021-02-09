@@ -1,6 +1,6 @@
 package _06_NumberGame;
 
-import static _14_MaxSubMatrixArray.maxSubMatrix.printMat;
+import static MyLibrary.Mat.printMat;
 
 public class Adaptive {
     public static int[][] buildMat(int[] game){

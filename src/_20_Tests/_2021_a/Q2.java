@@ -1,6 +1,6 @@
 package _20_Tests._2021_a;
 
-import static _14_MaxSubMatrixArray.maxSubMatrix.printMat;
+import static MyLibrary.Mat.printMat;
 
 public class Q2 {
 

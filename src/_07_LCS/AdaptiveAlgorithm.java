@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 
-import static _14_MaxSubMatrixArray.maxSubMatrix.printMat;
+import static MyLibrary.Mat.printMat;
+
 
 class Node {
     private final int r;

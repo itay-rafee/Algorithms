@@ -1,6 +1,6 @@
 package _15_GlassBall;
 
-import static _14_MaxSubMatrixArray.maxSubMatrix.printMat;
+import static MyLibrary.Mat.printMat;
 
 public class KBall {
 
