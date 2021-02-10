@@ -1,15 +1,16 @@
 
+
 import java.util.*;
 
 import static MyLibrary.Mat.printMat;
 
 
 public class LIS {
-    private int teta;
-    private int[] arr;
-    private int[] sortArr;
-    private LisData data;
-    private int[][] mat;
+    private final int teta;
+    private final int[] arr;
+    private final int[] sortArr;
+    private final LisData data;
+    private final int[][] mat;
 
 
     public LIS(int[] arr, int teta) {
@@ -19,20 +20,30 @@ public class LIS {
         int n = arr.length;
         sortArr = Arrays.copyOf(arr, n);
         Arrays.sort(sortArr);
-//        for (int j : sortArr) {
-//            System.out.println(j);
-//        }
         mat = findMat(sortArr, arr);
         data.lengthLIS = mat[n][n];
-//        printMat(mat);
-        data.numOfLis = thePaths();
-        allThePath();
+        List<LinkedList<Integer>> lcs1 = LCS1(sortArr, arr, n, n, mat);
+        Set<LinkedList<Integer>> ss = new HashSet<>(lcs1);
+        data.numOfLis = ss.size();
+        setAllPath(ss);
+    }
+
+    private void setAllPath(Set<LinkedList<Integer>> ss) {
+        int min = Math.min(teta, data.numOfLis), ln = data.lengthLIS, i = 0;
+        int[][] ans = new int[min][ln];
+        for (LinkedList<Integer> l : ss) {
+            for (int j = 0; j < ln; j++) {
+                ans[i][j] = l.get(j);
+            }
+            i++;
+            if (i > min) break;
+        }
+        data.allPath = ans;
     }
 
     public int lengthLIS() {
         return data.lengthLIS;
     }
-
 
     public int numOfLIS() {
         return data.numOfLis;
@@ -62,7 +73,6 @@ public class LIS {
         return lcs;
     }
 
-
     private static class LisData {
         private int[][] allPath;
         private int lengthLIS;
@@ -72,124 +82,31 @@ public class LIS {
         }
     }
 
-    static class Node {
-        private final int r;
-        private final int c;
-        private final int p;
-
-        public Node(int r, int c, int p) {
-            this.r = r;
-            this.c = c;
-            this.p = p;
+    public List<LinkedList<Integer>> LCS1(int[] X, int[] Y, int m, int n,
+                                          int[][] T) {
+        if (m == 0 || n == 0) {
+            List<LinkedList<Integer>> list = new LinkedList<>();
+            list.add(new LinkedList<>());
+            return list;
         }
-
-        public int getR() {
-            return r;
-        }
-
-        public int getC() {
-            return c;
-        }
-
-        public int getP() {
-            return p;
-        }
-    }
-
-    public int[][] allThePath() {
-        int[][] ans1 = new int[data.numOfLis][data.lengthLIS];
-        //the paths
-        Stack<Integer>[] stack = new Stack[data.numOfLis];
-        for (int i = 0; i < stack.length; i++) {
-            stack[i] = new Stack<>();
-        }
-        int[][] lcs = mat;
-        Queue<Node> q = new LinkedList<>();
-        HashMap<Integer, HashSet<Integer>> vis = new HashMap<>();
-        int ans = 1;
-        Node n = new Node(lcs.length - 1, lcs[0].length - 1, ans);
-        q.add(n);
-        while (!q.isEmpty()) {
-            n = q.poll();
-            int r = n.getR(), c = n.getC();
-            if (r != 0 && c != 0) {
-                int tor = n.getP();
-                if (sortArr[r - 1] == arr[c - 1]) {
-                    stack[tor-1].push(sortArr[r - 1]);
-                    q.add(new Node(r - 1, c - 1, tor));
-                }
-                else if (lcs[r - 1][c] > lcs[r][c - 1]) {
-                    q.add(new Node(r - 1, c, tor));
-                }
-                else if (lcs[r - 1][c] < lcs[r][c - 1])
-                    q.add(new Node(r, c - 1, tor));
-                else {
-                    addVis(r - 1, c, tor, vis, q);
-                    if (lcs[r - 1][c - 1] != lcs[r][c]) {
-                        ans++;
-                        stack[ans-1] = deepCopyStack(stack[tor-1]);
-                    }
-                    addVis(r, c - 1, tor, vis, q);
-                }
+        if (X[m - 1] == Y[n - 1]) {
+            List<LinkedList<Integer>> lcs = LCS1(X, Y, m - 1, n - 1, T);
+            for (LinkedList<Integer> lc : lcs) {
+                lc.add(X[m - 1]);
             }
+            return lcs;
         }
-        for (int i = 0; i < stack.length; i++) {
-            for (int j = 0; j < ans1[0].length; j++) {
-                if (!stack[i].empty())
-                    ans1[i][j] = stack[i].pop();
-            }
+        if (T[m - 1][n] > T[m][n - 1]) {
+            return LCS1(X, Y, m - 1, n, T);
         }
-        data.allPath = ans1;
-        return ans1;
-    }
-
-
-    private static Stack<Integer> deepCopyStack(Stack<Integer> integers1) {
-        return (Stack<Integer>)integers1.clone();
-    }
-
-    // return the paths
-    //0 - right , 1 - down
-    public int thePaths() {
-        int[][] lcs = mat;
-        Queue<Node> q = new LinkedList<>();
-        HashMap<Integer, HashSet<Integer>> vis = new HashMap<>();
-        int ans = 1;
-        Node n = new Node(lcs.length - 1, lcs[0].length - 1, ans);
-        q.add(n);
-        while (!q.isEmpty()) {
-            n = q.poll();
-            int r = n.getR(), c = n.getC();
-            if (r != 0 && c != 0) {
-                if (sortArr[r - 1] == arr[c - 1]) {
-                    q.add(new Node(r - 1, c - 1, ans));
-                } else if (lcs[r - 1][c] > lcs[r][c - 1]) {
-                    q.add(new Node(r - 1, c, ans));
-                } else if (lcs[r - 1][c] < lcs[r][c - 1])
-                    q.add(new Node(r, c - 1, ans));
-                else if (lcs[r - 1][c - 1] == lcs[r][c]) {
-                    addVis(r - 1, c, ans, vis, q);
-                    addVis(r, c - 1, ans, vis, q);
-                } else {
-                    addVis(r - 1, c, ans, vis, q);
-                    ans++;
-                    addVis(r, c - 1, ans, vis, q);
-                }
-            }
+        if (T[m][n - 1] > T[m - 1][n]) {
+            return LCS1(X, Y, m, n - 1, T);
         }
-        return ans;
-    }
+        List<LinkedList<Integer>> top = LCS1(X, Y, m - 1, n, T);
+        List<LinkedList<Integer>> left = LCS1(X, Y, m, n - 1, T);
+        top.addAll(left);
 
-    private void addVis(int r, int c, int ans, HashMap<Integer, HashSet<Integer>> vis, Queue<Node> q) {
-        if (!vis.containsKey(r)) {
-            HashSet<Integer> t = new HashSet<>();
-            t.add(c);
-            vis.put(r, t);
-            q.add(new Node(r, c, ans));
-        } else if (!vis.get(r).contains(c)) {
-            vis.get(r).add(c);
-            q.add(new Node(r, c, ans));
-        }
+        return top;
     }
 
     private static Random _rnd = null;
@@ -224,17 +141,159 @@ public class LIS {
     }
 
     public static void main(String[] args) {
-        int[] arr = {2, 4, 90, -3, -2, -1, -10, -9, -8,-7};
+        int[] arr = {2, 4, 90, -3, -2, -1, -10, -9, -8};
         int[] arr2 = {1, 2, 4, 3, -3, -2, -1};
-//        int n = 21;
-//        arr = arr_creator(n, 3);
-        int teta = 10;
-        LIS test = new LIS(arr, teta);
-        System.out.println("Length of the LIS: "+test.lengthLIS());
-        System.out.println("Number of LIS path: "+test.numOfLIS());
+        int n = 255;
+        arr = arr_creator(n, 3);
+        int teta = 100;
+        long start = System.currentTimeMillis();
+//        LIS test = new LIS(arr, teta);
+//        System.out.println("Length of the LIS: " + test.lengthLIS());
+//        System.out.println("Number of LIS path: " + test.numOfLIS());
+//        System.out.println("All the LIS path:");
+//        printMat(test.allLIS());
+        long end = System.currentTimeMillis();
+        double ed = (end - start) / 1000.0;
+        System.out.println("the time is: " + ed);
+
+        System.out.println("\n## lis2 ##");
+        start = System.currentTimeMillis();
+        lis2 test1 = new lis2(arr, teta);
+        System.out.println("Length of the LIS: " + test1.lengthLIS());
+        System.out.println("Number of LIS path: " + test1.numOfLIS());
         System.out.println("All the LIS path:");
-        printMat(test.allLIS());
+        int[][] allPath = test1.allLIS();
+        printMat(allPath);
+        end = System.currentTimeMillis();
+        ed = (end - start) / 1000.0;
+        System.out.println("the time is: " + ed);
+        System.out.println();
+        for (int i = 0; i < allPath.length; i++) {
+            for (int j = i + 1; j < allPath.length; j++) {
+                if (Arrays.equals(allPath[i], allPath[j]))
+                    System.out.println("false");
+            }
+        }
+//        printMat(test.mat);
+        System.out.println(Arrays.toString(arr));
     }
 
+
 }
+
+class lis2 {
+
+    private static class LisData {
+        private int[][] allPath;
+        private int lengthLIS;
+        private int numOfLis;
+
+        public LisData() {
+        }
+    }
+
+    private final int teta;
+    private final int[] arr;
+    private final int[] sortArr;
+    private final LisData data;
+    private final int[][] mat;
+
+
+    public lis2(int[] arr, int teta) {
+        this.teta = teta;
+        this.arr = arr;
+        data = new LisData();
+        int n = arr.length;
+        sortArr = Arrays.copyOf(arr, n);
+        Arrays.sort(sortArr);
+        mat = LIS.findMat(sortArr, arr);
+        data.lengthLIS = mat[n][n];
+        data.numOfLis = thePaths();
+    }
+
+    public int lengthLIS() {
+        return data.lengthLIS;
+    }
+    public int numOfLIS() {
+        return data.numOfLis;
+    }
+    public int[][] allLIS() {
+        return data.allPath;
+    }
+
+
+    static class Node {
+        private final int r;// row
+        private final int c;// col
+        private final int p;//num of the path
+        private final int ind;//the index in the arr
+
+        public Node(int r, int c, int p, int ind) {
+            this.r = r;
+            this.c = c;
+            this.p = p;
+            this.ind = ind;
+        }
+        public int getInd() {return ind;}
+        public int getR() {
+            return r;
+        }
+        public int getC() {
+            return c;
+        }
+        public int getP() {
+            return p;
+        }
+    }
+
+
+    public int thePaths() {
+        printMat(mat);
+        int lis = data.lengthLIS;
+        int[][] st = new int[arr.length][lis];
+        int[][] lcs = mat;
+        Queue<Node> q = new LinkedList<>();
+        HashMap<Integer, HashSet<Integer>> vis = new HashMap<>();
+        int ans = 1;
+        Node n = new Node(lcs.length - 1, lcs[0].length - 1, 0, lis - 1);
+        q.add(n);
+        while (!q.isEmpty()) {
+            n = q.poll();
+            int r = n.getR(), c = n.getC(), p = n.getP(), ind = n.getInd();
+            if (r != 0 && c != 0) {
+                if (sortArr[r - 1] == arr[c - 1]) {
+                    st[p][ind] = arr[c - 1];
+                    q.add(new Node(r - 1, c - 1, p, ind - 1));
+                } else if (lcs[r][c] != 0) {
+                    int i = r;
+
+                    int j2 = c;
+                    while (lcs[r][c] == lcs[i][j2 - 1]) j2--;
+                    while (lcs[r][c] == lcs[i - 1][j2]) i--;
+                    q.add(new Node(i, j2, p, ind));
+                    i--;
+
+                    while (lcs[r][c] == lcs[i][c]) {
+                        int j = c;
+                        while (lcs[r][c] == lcs[i][j - 1]) j--;
+                        while (lcs[r][c] == lcs[i - 1][j]) i--;
+                        ans++;
+//                        System.out.println("p="+p+", ind="+ind+", ans-1="+(ans-1)+", lis-ind="+(lis-ind));
+                        System.arraycopy(st[p], ind, st[ans - 1], ind, lis - ind);
+                        q.add(new Node(i, j, ans - 1, ind));
+                        i--;
+                    }
+                }
+            }
+        }
+        int min = Math.min(ans, teta);
+        int[][] ans2 = new int[min][lis];
+        if (min >= 0) System.arraycopy(st, 0, ans2, 0, min);
+        data.allPath = ans2;
+        return ans;
+    }
+}
+
+
+
 
