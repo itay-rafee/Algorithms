@@ -2,6 +2,8 @@ package _08_LIS;
 
 import java.util.Arrays;
 
+import static MyLibrary.Mat.printMat;
+
 public class Adaptive {
 
     public static int lisAdaptive(int[] arr){
@@ -33,10 +35,13 @@ public class Adaptive {
                 if(index == len) len++;
                 copy(mat,index);
             }
+            printMat(mat);
             int[] ans = new int[len];
             if (ans.length >= 0) System.arraycopy(mat[len - 1], 0, ans, 0, ans.length);
             return ans;
         }
+
+
 
         private static void copy(int[][] mat, int index) {
             if (index >= 0) System.arraycopy(mat[index - 1], 0, mat[index], 0, index);
@@ -88,7 +93,7 @@ public class Adaptive {
         }
 
         public static void main(String[] args) {
-            int[] arr = {1,100,101,2,3,4,5};
+            int[] arr = {15, -71, -48, 69, -76, 59, 0, -60, 51, 11, -67, -6, 56, -46, 8, -17, 58, 4, 67, -40, 22, -13, -59, -33, -26, 55, -45, 71, 38, -22, -35, -43, -78, 79, 12, 64, -64, 18, 5, -58};
             System.out.println((LISDynamicLen(arr)));
             System.out.println(Arrays.toString(LISDynamic(arr)));
         }
