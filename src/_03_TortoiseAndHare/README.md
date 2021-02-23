@@ -1,5 +1,5 @@
 <tr><td>
 
-<p align="right"><img src=src/images/tortoise.PNG></p>
+![alt text](https://github.com/itay-rafee/Algorithm_1/blob/main/src/images/tortoise.PNG)
 
 </td>
