@@ -1,4 +1,4 @@
-# Algorithm
+# Algorithms
 
 <p align="center"><img src="https://www.worldofitech.com/wp-content/uploads/2020/11/Java-Algorithms.png"></p>
 
