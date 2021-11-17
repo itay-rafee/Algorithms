@@ -5,8 +5,6 @@
 In this project we will implement algorithms that were taught in the Algorithms A course, 
 in addition there are also examples and solutions of tests from previous years in this project.
 
-Java Algorithms
-=========================================
 
 ## List of Implementations
 
