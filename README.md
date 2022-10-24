@@ -12,7 +12,7 @@ in addition there are also examples and solutions of tests from previous years. 
 - [ParkingProblem](src/_02_ParkingProblem)
 - [TortoiseAndHare](src/_03_TortoiseAndHare)
 - [MaxMin](src/_04_MaxMin)
-- [Max1Max2](src/05_Max1Max2)
+- [Max1Max2](src/_05_Max1Max2)
 - [NumberGame](src/_06_NumberGame)
 - [LCS](src/_07_LCS)
 - [LIS](src/_08_LIS)
