@@ -2,8 +2,8 @@
 
 <p align="center"><img src="https://www.worldofitech.com/wp-content/uploads/2020/11/Java-Algorithms.png"></p>
 
-In this project we will implement algorithms that were taught in the Algorithms A course, 
-in addition there are also examples and solutions of tests from previous years in this project.
+Implementation of algorithms that were taught in Algorithms Course, 
+in addition there are also examples and solutions of tests from previous years. enjoy ;)
 
 
 ## List of Implementations
